@@ -1,0 +1,9 @@
+node_modules
+.next
+.env
+*.db
+*.db-journal
+prisma/dev.db*
+backups
+coverage
+.DS_Store

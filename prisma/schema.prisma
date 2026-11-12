@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Question {
+  id         String   @id @default(cuid())
+  clue       String
+  answer     String
+  normalized String
+  points     Int      @default(10)
+  direction  String   @default("AUTO")
+  active     Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model PuzzleVersion {
+  id               String        @id @default(cuid())
+  versionNumber    Int
+  gridWidth        Int
+  gridHeight       Int
+  serializedLayout String
+  published        Boolean       @default(false)
+  createdAt        DateTime      @default(now())
+  attempts         GameAttempt[]
+}
+
+model GameConfiguration {
+  id                         String   @id @default("singleton")
+  gameTitle                  String   @default("MTN Data Privacy Crossword Challenge")
+  welcomeMessage             String   @default("Test your data privacy knowledge!")
+  durationMinutes            Int      @default(5)
+  gameStatus                 String   @default("OPEN")
+  eventMode                  String   @default("TEST")
+  repeatAttemptsAllowed      Boolean  @default(false)
+  resultPopupDurationSeconds Int      @default(15)
+  publishedPuzzleVersionId   String?
+  updatedAt                  DateTime @updatedAt
+  createdAt                  DateTime @default(now())
+}
+
+model Player {
+  id                   String        @id @default(cuid())
+  fullOfficialName     String
+  normalizedEmployeeId String        @unique
+  rawEmployeeId        String
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+  attempts             GameAttempt[]
+}
+
+model GameAttempt {
+  id                       String          @id @default(cuid())
+  playerId                 String
+  puzzleVersionId          String
+  eventMode                String
+  status                   String          @default("ACTIVE")
+  startTime                DateTime        @default(now())
+  allowedDurationSeconds   Int
+  submissionTime           DateTime?
+  durationSeconds          Int?
+  score                    Int             @default(0)
+  totalAvailableScore      Int             @default(0)
+  correctAnswerCount       Int             @default(0)
+  totalQuestionCount       Int             @default(0)
+  submissionReason         String?
+  completed                Boolean         @default(false)
+  finalLeaderboardPosition Int?
+  currentGridState         String          @default("{}")
+  createdAt                DateTime        @default(now())
+  updatedAt                DateTime        @updatedAt
+  player                   Player          @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  puzzleVersion            PuzzleVersion   @relation(fields: [puzzleVersionId], references: [id])
+  answers                  AttemptAnswer[]
+
+  @@index([status])
+  @@index([eventMode, completed])
+}
+
+model AttemptAnswer {
+  id                    String   @id @default(cuid())
+  attemptId             String
+  questionId            String
+  playerSubmittedAnswer String
+  isCorrect             Boolean
+  pointsEarned          Int
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  attempt               GameAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+}
+
+model ReplayPermission {
+  id                   String   @id @default(cuid())
+  normalizedEmployeeId String   @unique
+  used                 Boolean  @default(false)
+  createdAt            DateTime @default(now())
+}
