@@ -7,16 +7,16 @@ const SEED = [
   { clue: "Fraudulent attempt to obtain sensitive information by disguising as a trustworthy entity", answer: "PHISHING", points: 10 },
   { clue: "Secret word or string used to authenticate a user", answer: "PASSWORD", points: 10 },
   { clue: "Process of converting information into a secret code", answer: "ENCRYPTION", points: 10 },
-  { clue: "Unauthorized access or disclosure of personal data (two words)", answer: "DATA BREACH", points: 15 },
+  { clue: "Unauthorized access or disclosure of personal data (two words)", answer: "DATABREACH", points: 15 },
   { clue: "Agreement given freely by a data subject", answer: "CONSENT", points: 10 },
-  { clue: "Individual whose personal data is processed (two words)", answer: "DATA SUBJECT", points: 15 },
+  { clue: "Individual whose personal data is processed (two words)", answer: "DATASUBJECT", points: 15 },
   { clue: "State of keeping information secret", answer: "PRIVACY", points: 10 },
   { clue: "Verifying the identity of a user", answer: "AUTHENTICATION", points: 15 },
   { clue: "Harmful software designed to damage systems", answer: "MALWARE", points: 10 },
   { clue: "A security event that may compromise data", answer: "INCIDENT", points: 10 },
   { clue: "Keeping only the minimum data required", answer: "MINIMIZATION", points: 15 },
   { clue: "Period data is kept before deletion", answer: "RETENTION", points: 10 },
-  { clue: "Manipulating people to disclose confidential information (two words)", answer: "SOCIAL ENGINEERING", points: 15 },
+  { clue: "Manipulating people to disclose confidential information (two words)", answer: "SOCIALENGINEERING", points: 15 },
   { clue: "A digital identifier connecting you to online services", answer: "ACCOUNT", points: 10 }
 ];
 
